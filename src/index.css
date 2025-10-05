@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+/* 🧠 Define your theme here */
+@theme {
+  --color-primary: hsl(98, 50%, 90%);
+  --color-secondary: hsl(98, 50%, 10%);
+  --color-tertiary: hsl(158, 80%, 20%);
+  --color-accent: hsl(38, 80%, 20%);
+}
+
+/* 🌙 Dark mode overrides */
+.dark {
+  --color-primary: hsl(98, 50%, 10%);
+  --color-secondary: hsl(98, 50%, 90%);
+  --color-tertiary: hsl(158, 80%, 80%);
+  --color-accent: hsl(38, 80%, 80%);
+}
+
+/* Optional: apply base colors to body */
+body {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  @apply transition-colors duration-300;
+}
