@@ -64,8 +64,8 @@ const NewAccountForm = ({ onClose }: { onClose: () => void }) => {
           }
           className="w-full p-3 rounded-lg border border-secondary/20 focus:ring-2 focus:ring-accent outline-none transition"
         >
-          <option value="checking">Cash</option>
-          <option value="savings">Bank</option>
+          <option value="cash">Cash</option>
+          <option value="bank">Bank</option>
           <option value="momo">MoMo</option>
           <option value="card">Card</option>
           <option value="other">Other</option>

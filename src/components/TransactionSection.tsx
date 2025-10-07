@@ -22,9 +22,11 @@ const TransactionSection = () => {
             size={16}
           />
         </Link>
-      </div>{" "}
+      </div>
       {transactions.map((transaction) => (
-        <TransactionCard key={transaction.id} transaction={transaction} />
+        <div key={transaction.id} className="flex flex-col mb-4">
+          <TransactionCard transaction={transaction} />
+        </div>
       ))}
     </div>
   );

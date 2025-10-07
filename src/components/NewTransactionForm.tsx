@@ -1,24 +1,8 @@
 import { useState } from "react";
-import type { Transaction } from "../services/db";
+import type { Transaction, TransactionReason } from "../services/db";
 import { useAccount } from "../hooks/useAccount";
 import { formatCurrency, generateTransactionId } from "../services/utils";
-
-const categories = {
-  Food: ["Groceries", "Dining Out", "Snacks"],
-  Transport: ["Ride-hailing", "Fuel", "Public Transport"],
-  Salary: ["Bonus", "Monthly Salary"],
-  Shopping: ["Clothes", "Electronics"],
-  Entertainment: ["Movies", "Games"],
-  Bills: ["Electricity", "Internet"],
-  Others: [],
-};
-
-type TransactionReason = {
-  category: keyof typeof categories | "";
-  subcategory?: string;
-  note?: string;
-  tags?: string[];
-};
+import { categories } from "../services/db";
 
 const NewTransactionForm = ({ onClose }: { onClose: () => void }) => {
   const { accounts, createTransaction } = useAccount();
@@ -45,7 +29,9 @@ const NewTransactionForm = ({ onClose }: { onClose: () => void }) => {
       return;
     }
 
-    const accountName = accounts.find(acc => acc.id === transaction.accountId)?.name;
+    const accountName = accounts.find(
+      (acc) => acc.id === transaction.accountId
+    )?.name;
     const newTransaction: Transaction = {
       ...transaction,
       id: generateTransactionId(accountName || "ACC"),
@@ -71,11 +57,15 @@ const NewTransactionForm = ({ onClose }: { onClose: () => void }) => {
         {/* Account Selection */}
         <select
           value={transaction.accountId}
-          onChange={e => setTransaction({ ...transaction, accountId: e.target.value })}
+          onChange={(e) =>
+            setTransaction({ ...transaction, accountId: e.target.value })
+          }
           className="w-full p-3 rounded-lg border border-secondary/20 focus:ring-2 focus:ring-accent outline-none transition"
         >
-          <option value="" disabled>Select an account</option>
-          {accounts.map(acc => (
+          <option value="" disabled>
+            Select an account
+          </option>
+          {accounts.map((acc) => (
             <option key={acc.id} value={acc.id}>
               {acc.name} ({formatCurrency(acc.balance)})
             </option>
@@ -85,12 +75,20 @@ const NewTransactionForm = ({ onClose }: { onClose: () => void }) => {
         {/* Category */}
         <select
           value={reason.category}
-          onChange={e => setReason({ ...reason, category: e.target.value as keyof typeof categories, subcategory: "" })}
+          onChange={(e) =>
+            setReason({
+              ...reason,
+              category: e.target.value as keyof typeof categories,
+              subcategory: "",
+            })
+          }
           className="w-full p-3 rounded-lg border border-secondary/20 focus:ring-2 focus:ring-accent outline-none transition"
         >
           <option value="">Select category</option>
-          {Object.keys(categories).map(cat => (
-            <option key={cat} value={cat}>{cat}</option>
+          {Object.keys(categories).map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
           ))}
         </select>
 
@@ -98,12 +96,16 @@ const NewTransactionForm = ({ onClose }: { onClose: () => void }) => {
         {reason.category && categories[reason.category]?.length > 0 && (
           <select
             value={reason.subcategory}
-            onChange={e => setReason({ ...reason, subcategory: e.target.value })}
+            onChange={(e) =>
+              setReason({ ...reason, subcategory: e.target.value })
+            }
             className="w-full p-3 rounded-lg border border-secondary/20 focus:ring-2 focus:ring-accent outline-none transition"
           >
             <option value="">Select subcategory</option>
-            {categories[reason.category].map(sub => (
-              <option key={sub} value={sub}>{sub}</option>
+            {categories[reason.category].map((sub) => (
+              <option key={sub} value={sub}>
+                {sub}
+              </option>
             ))}
           </select>
         )}
@@ -112,7 +114,7 @@ const NewTransactionForm = ({ onClose }: { onClose: () => void }) => {
         <input
           type="text"
           value={reason.note}
-          onChange={e => setReason({ ...reason, note: e.target.value })}
+          onChange={(e) => setReason({ ...reason, note: e.target.value })}
           placeholder="Optional note"
           className="w-full p-3 rounded-lg border border-secondary/20 focus:ring-2 focus:ring-accent outline-none transition"
         />
@@ -121,7 +123,12 @@ const NewTransactionForm = ({ onClose }: { onClose: () => void }) => {
         <input
           type="text"
           value={reason.tags?.join(", ")}
-          onChange={e => setReason({ ...reason, tags: e.target.value.split(",").map(t => t.trim()) })}
+          onChange={(e) =>
+            setReason({
+              ...reason,
+              tags: e.target.value.split(",").map((t) => t.trim()),
+            })
+          }
           placeholder="Optional tags, comma separated"
           className="w-full p-3 rounded-lg border border-secondary/20 focus:ring-2 focus:ring-accent outline-none transition"
         />
@@ -130,7 +137,9 @@ const NewTransactionForm = ({ onClose }: { onClose: () => void }) => {
         <input
           type="number"
           value={transaction.amount}
-          onChange={e => setTransaction({ ...transaction, amount: Number(e.target.value) })}
+          onChange={(e) =>
+            setTransaction({ ...transaction, amount: Number(e.target.value) })
+          }
           placeholder="Amount"
           className="w-full p-3 rounded-lg border border-secondary/20 focus:ring-2 focus:ring-accent outline-none transition"
         />
@@ -138,7 +147,12 @@ const NewTransactionForm = ({ onClose }: { onClose: () => void }) => {
         {/* Transaction Type */}
         <select
           value={transaction.type}
-          onChange={e => setTransaction({ ...transaction, type: e.target.value as Transaction["type"] })}
+          onChange={(e) =>
+            setTransaction({
+              ...transaction,
+              type: e.target.value as Transaction["type"],
+            })
+          }
           className="w-full p-3 rounded-lg border border-secondary/20 focus:ring-2 focus:ring-accent outline-none transition"
         >
           <option value="expense">Expense</option>

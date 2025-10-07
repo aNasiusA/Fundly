@@ -34,13 +34,22 @@ export type Transaction = {
   createdAt: string;
 };
 
-type TransactionReason = {
-  category: string;
+export type TransactionReason = {
+  category: keyof typeof categories | "";
   subcategory?: string;
   note?: string;
   tags?: string[];
 };
 
+export const categories = {
+  Food: ["Groceries", "Dining Out", "Snacks"],
+  Transport: ["Ride-hailing", "Fuel", "Public Transport"],
+  Salary: ["Bonus", "Monthly Salary"],
+  Shopping: ["Clothes", "Electronics"],
+  Entertainment: ["Movies", "Games"],
+  Bills: ["Electricity", "Internet"],
+  Others: [],
+};
 const DB_KEY = "fundly_finance_tracker_db";
 
 const getDB = (): DBShape => {
