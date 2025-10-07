@@ -1,10 +1,20 @@
 import type { Account } from "../services/db";
-import { Smartphone, Trash2, Wallet, CreditCard, Landmark } from "lucide-react";
+import {
+  Smartphone,
+  Wallet,
+  CreditCard,
+  Landmark,
+  Archive,
+  ArchiveRestore,
+} from "lucide-react";
 import { formatCurrency } from "../services/utils";
 import { useLocation } from "react-router-dom";
+import { useAccount } from "../hooks/useAccount";
 
 const AccountCard = ({ account }: { account: Account }) => {
   const location = useLocation();
+  const { archiveAccount, unarchiveAccount } = useAccount();
+
   const returnIcon = () => {
     switch (account.type) {
       case "bank":
@@ -29,8 +39,19 @@ const AccountCard = ({ account }: { account: Account }) => {
           <p className="text-md truncate">{account.name}</p>
         </div>
         {location.pathname === "/accounts" ? (
-          <button className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-            <Trash2 size={20} className="text-red-500" />
+          <button
+            className="w-8 h-8 bg-primary rounded-full flex items-center justify-center"
+            onClick={() =>
+              account.isArchived
+                ? unarchiveAccount(account.id)
+                : archiveAccount(account.id)
+            }
+          >
+            {account.isArchived ? (
+              <ArchiveRestore size={20} />
+            ) : (
+              <Archive size={20} />
+            )}
           </button>
         ) : null}
       </div>
