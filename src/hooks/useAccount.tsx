@@ -1,6 +1,7 @@
 import { db } from "../services/db";
 import type { Account, Transaction } from "../services/db";
 import { useState, useEffect } from "react";
+import { notify } from "../services/notify";
 
 export const useAccount = () => {
   const [accounts, setAccounts] = useState<Account[]>(() => {
@@ -33,9 +34,18 @@ export const useAccount = () => {
   }, []);
 
   const createAccount = (account: Account) => {
+    const newName = account.name.trim().toLowerCase();
+    const duplicate = accounts.some(
+      (a) => a.name.trim().toLowerCase() === newName
+    );
+    if (duplicate) {
+      notify.error(`Account with name "${account.name}" already exists.`);
+      return false;
+    }
     const newAccounts = [...accounts, account];
     db.set("accounts", newAccounts);
     setAccounts(newAccounts);
+    return true;
   };
 
   const updateAccountBalance = (transaction: Transaction) => {

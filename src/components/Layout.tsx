@@ -33,7 +33,8 @@ const Layout = () => {
 
   return (
     <div>
-      <div>
+      {/* Add padding at the bottom so fixed bottom nav doesn't cover content */}
+      <div className="mb-16">
         <Outlet />
       </div>
 
@@ -72,13 +73,13 @@ const Layout = () => {
         </div>
       </div>
       {/* Modal for add actions (transaction / account) */}
-    <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-      {location.pathname === "/" ? (
-        <NewTransactionForm onClose={() => setIsModalOpen(false)} />
-      ) : (
-        <NewAccountForm onClose={() => setIsModalOpen(false)} />
-      )}
-    </Modal>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        {location.pathname === "/" ? (
+          <NewTransactionForm onClose={() => setIsModalOpen(false)} />
+        ) : (
+          <NewAccountForm onClose={() => setIsModalOpen(false)} />
+        )}
+      </Modal>
     </div>
   );
 };
