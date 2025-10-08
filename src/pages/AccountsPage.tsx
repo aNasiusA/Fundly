@@ -3,6 +3,7 @@ import AccountCard from "../components/AccountCard";
 import { Plus, ArrowRightLeft } from "lucide-react";
 import BackButton from "../components/BackButton";
 import { useState } from "react";
+import { useState } from "react";
 
 const AccountsPage = () => {
   const { accounts, archivedAccounts } = useAccount();
@@ -24,6 +25,7 @@ const AccountsPage = () => {
 
   return (
     <div className="flex flex-col p-4 h-screen">
+      {/* header */}
       {/* header */}
       <div className="flex items-center justify-between w-full mb-4">
         <BackButton />
@@ -51,12 +53,24 @@ const AccountsPage = () => {
           renderEmptyState()
         )
       ) : accounts.length > 0 ? (
+      {showArchived ? (
+        archivedAccounts.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {archivedAccounts.map((account) => (
+              <AccountCard key={account.id} account={account} />
+            ))}
+          </div>
+        ) : (
+          renderEmptyState()
+        )
+      ) : accounts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {accounts.map((account) => (
             <AccountCard key={account.id} account={account} />
           ))}
         </div>
       ) : (
+        renderEmptyState()
         renderEmptyState()
       )}
     </div>
