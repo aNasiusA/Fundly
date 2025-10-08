@@ -11,6 +11,7 @@ const NewAccountForm = ({ onClose }: { onClose: () => void }) => {
     type: "cash",
     balance: 0,
     createdAt: new Date().toISOString(),
+    isArchived: false,
   });
 
   const handleCreateNewAccount = () => {

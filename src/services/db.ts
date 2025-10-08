@@ -18,6 +18,8 @@ export type Account = {
   balance: number;
   type: "cash" | "bank" | "momo" | "card" | "other";
   createdAt: string;
+  isArchived: boolean;
+  archivedAt?: string;
 };
 
 type Settings = {
@@ -75,6 +77,7 @@ const dispatchDBChange = (key: string, value: any) => {
 export const db = {
   get(collection: string) {
     const data = getDB();
+    dispatchDBChange(collection, data[collection as keyof DBShape]);
     return collection ? data[collection as keyof DBShape] : data;
   },
 
