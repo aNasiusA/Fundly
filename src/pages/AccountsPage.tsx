@@ -1,6 +1,6 @@
 import { useAccount } from "../hooks/useAccount";
 import AccountCard from "../components/AccountCard";
-import { Plus } from "lucide-react";
+import { Plus, ArrowRightLeft } from "lucide-react";
 import BackButton from "../components/BackButton";
 import { useState } from "react";
 
@@ -14,16 +14,10 @@ const AccountsPage = () => {
         className="flex items-center space-x-2 hover:cursor-pointer"
         onClick={() => console.log("Add Account")}
       >
-        {showArchived ? (
-          <>
-            <button className="px-4 py-2 rounded-full bg-tertiary/90 w-10 h-10 flex items-center justify-center shadow-md">
-              <Plus size={16} />
-            </button>
-            <p className="text-gray-700 font-medium">Add Account</p>
-          </>
-        ) : (
-          <p className="text-gray-700 font-medium">No Archived Accounts</p>
-        )}
+        <p className="text-gray-700 font-medium">
+          {showArchived ? "No Archived Accounts" : "No Active Accounts"}
+        </p>
+        {!showArchived && <Plus className="w-4 h-4" />}
       </div>
     </div>
   );
@@ -33,15 +27,17 @@ const AccountsPage = () => {
       {/* header */}
       <div className="flex items-center justify-between w-full mb-4">
         <BackButton />
-        <h1 className="text-2xl font-bold text-center flex-1">Accounts</h1>
-        <div className="flex justify-end w-40">
-          <button
-            className="px-4 py-2 rounded-full bg-tertiary/90 w-full text-sm truncate"
-            onClick={() => setShowArchived(!showArchived)}
-          >
-            {showArchived ? "Archived Accounts" : "Active Accounts"}
-          </button>
-        </div>
+        <h1 className="text-2xl font-bold text-center flex-1">
+          {showArchived ? "Archived Accounts" : "Active Accounts"}
+        </h1>
+        <button
+          className={`flex justify-center items-center w-10 h-10 rounded-full bg-tertiary/90 transition-transform ${
+            showArchived ? "rotate-180" : ""
+          }`}
+          onClick={() => setShowArchived(!showArchived)}
+        >
+          <ArrowRightLeft />
+        </button>
       </div>
 
       {showArchived ? (

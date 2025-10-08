@@ -77,7 +77,7 @@ const dispatchDBChange = (key: string, value: any) => {
 export const db = {
   get(collection: string) {
     const data = getDB();
-    dispatchDBChange(collection, data[collection as keyof DBShape]);
+    // dispatchDBChange(collection, data[collection as keyof DBShape]);
     return collection ? data[collection as keyof DBShape] : data;
   },
 

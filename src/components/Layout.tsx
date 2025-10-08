@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import NewAccountForm from "./NewAccountForm";
 import NewTransactionForm from "./NewTransactionForm";
+import { Toaster } from "react-hot-toast";
 
 const Layout = () => {
   const location = useLocation();
@@ -33,6 +34,22 @@ const Layout = () => {
 
   return (
     <div>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+          success: {
+            style: { background: "green" },
+          },
+          error: {
+            style: { background: "red" },
+          },
+        }}
+      />
       {/* Add padding at the bottom so fixed bottom nav doesn't cover content */}
       <div className="mb-16">
         <Outlet />
