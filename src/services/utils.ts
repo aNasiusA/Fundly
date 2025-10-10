@@ -1,14 +1,16 @@
 import { db } from "./db";
-const settings = db.get("settings") as { currency: string };
 
 export const formatCurrency = (
   amount: number,
-  currency = settings.currency || "USD",
+  currency?: string,
   locale = "en-US"
 ) => {
+  const settings = (db.get("settings") as { currency?: string }) || {};
+  const curr = currency || settings.currency || "USD";
+
   return amount.toLocaleString(locale, {
     style: "currency",
-    currency: currency,
+    currency: curr,
   });
 };
 

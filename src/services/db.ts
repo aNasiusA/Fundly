@@ -22,7 +22,7 @@ export type Account = {
   archivedAt?: string;
 };
 
-type Settings = {
+export type Settings = {
   currency: "GHS" | "USD" | "EUR" | "GBP" | string;
   theme: "light" | "dark";
 };

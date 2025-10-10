@@ -2,6 +2,7 @@ import { useState } from "react";
 import { generateAccountId } from "../services/utils";
 import type { Account } from "../services/db";
 import { useAccount } from "../hooks/useAccount";
+import { notify } from "../services/notify";
 
 const NewAccountForm = ({ onClose }: { onClose: () => void }) => {
   const { createAccount } = useAccount();
@@ -22,9 +23,9 @@ const NewAccountForm = ({ onClose }: { onClose: () => void }) => {
         createdAt: new Date().toISOString(),
       };
       createAccount(newAccount);
-      console.log("Creating account:", newAccount);
       onClose();
     } else {
+      notify.error("Please provide valid account details.");
       console.error("Form is invalid. Please check the inputs.");
     }
   };

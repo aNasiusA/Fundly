@@ -3,6 +3,7 @@ import type { Transaction, TransactionReason } from "../services/db";
 import { useAccount } from "../hooks/useAccount";
 import { formatCurrency, generateTransactionId } from "../services/utils";
 import { categories } from "../services/db";
+import { notify } from "../services/notify";
 
 const NewTransactionForm = ({ onClose }: { onClose: () => void }) => {
   const { accounts, createTransaction } = useAccount();
@@ -25,6 +26,7 @@ const NewTransactionForm = ({ onClose }: { onClose: () => void }) => {
 
   const handleCreateNewTransaction = () => {
     if (!isFormValid) {
+      notify.error("Please provide valid transaction details.");
       console.error("Form is invalid. Please check the inputs.");
       return;
     }
@@ -40,7 +42,6 @@ const NewTransactionForm = ({ onClose }: { onClose: () => void }) => {
     };
 
     createTransaction(newTransaction);
-    console.log("Creating transaction:", newTransaction);
     onClose();
   };
 
